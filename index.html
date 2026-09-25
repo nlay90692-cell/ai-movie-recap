@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AI Movie Recap</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0b12;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: auto;
+      padding: 50px 0;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .logo {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #ff6ec7, #8b7cff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      color: #aaa;
+      font-size: 17px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: #151520;
+      border: 1px solid #29293a;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #ddd;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      height: 160px;
+      resize: vertical;
+      background: #0e0e17;
+      border: 1px solid #333348;
+      border-radius: 12px;
+      padding: 15px;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #9b7cff;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #ff5fc7, #806cff);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #result {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .scene {
+      background: #10101a;
+      border: 1px solid #29293a;
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 15px;
+    }
+
+    .scene h3 {
+      color: #ff75ca;
+      margin-bottom: 10px;
+    }
+
+    .scene p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      margin-top: 40px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <section class="hero">
+      <div class="logo">🎬</div>
+
+      <h1>AI Movie Recap</h1>
+
+      <p class="subtitle">
+        Turn a movie story into a short AI video workflow.
+      </p>
+    </section>
+
+
+    <div class="card">
+
+      <label for="movieStory">
+        Enter Movie Story
+      </label>
+
+      <textarea
+        id="movieStory"
+        placeholder="Paste your movie story here...">
+      </textarea>
+
+      <button onclick="generateRecap()">
+        ✨ Generate 4-Scene Recap
+      </button>
+
+      <div id="result">
+
+        <div class="scene">
+          <h3>🎬 Scene 1 — Introduction</h3>
+          <p>
+            Establish the main character and the world of the story.
+          </p>
+        </div>
+
+        <div class="scene">
+          <h3>⚡ Scene 2 — Conflict</h3>
+          <p>
+            Show the main problem or unexpected event.
+          </p>
+        </div>
+
+        <div class="scene">
+          <h3>🔥 Scene 3 — Climax</h3>
+          <p>
+            Build the most exciting moment of the story.
+          </p>
+        </div>
+
+        <div class="scene">
+          <h3>❤️ Scene 4 — Ending</h3>
+          <p>
+            Show the emotional ending and conclusion.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <footer>
+      AI Movie Recap • Creative Video Workflow
+    </footer>
+
+  </div>
+
+
+  <script>
+
+    function generateRecap() {
+
+      const story =
+        document.getElementById("movieStory").value.trim();
+
+      const result =
+        document.getElementById("result");
+
+      if (story === "") {
+
+        alert("Please enter a movie story first.");
+
+        return;
+      }
+
+      result.style.display = "block";
+
+      result.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+  </script>
+
+</body>
+</html>
