@@ -1,234 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AI Movie Recap</title>
+<title>AI Movie Recap</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b0b12;
-      color: white;
-      min-height: 100vh;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0a10;
+  color: #eee;
+}
 
-    .container {
-      width: 90%;
-      max-width: 900px;
-      margin: auto;
-      padding: 50px 0;
-    }
+.container {
+  max-width: 760px;
+  margin: auto;
+  padding: 35px 18px;
+}
 
-    .hero {
-      text-align: center;
-      padding: 50px 20px;
-    }
+.header {
+  text-align: center;
+  margin-bottom: 35px;
+}
 
-    .logo {
-      font-size: 55px;
-      margin-bottom: 15px;
-    }
+.logo {
+  font-size: 48px;
+}
 
-    h1 {
-      font-size: 42px;
-      margin-bottom: 15px;
-      background: linear-gradient(90deg, #ff6ec7, #8b7cff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+h1 {
+  margin: 8px 0;
+  font-size: 34px;
+  background: linear-gradient(90deg,#ff4fc3,#a56bff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
 
-    .subtitle {
-      color: #aaa;
-      font-size: 17px;
-      margin-bottom: 40px;
-    }
+.subtitle {
+  color: #aaa;
+}
 
-    .card {
-      background: #151520;
-      border: 1px solid #29293a;
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 25px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    }
+.card {
+  background: #15141d;
+  border: 1px solid #292735;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.25);
+}
 
-    label {
-      display: block;
-      margin-bottom: 10px;
-      color: #ddd;
-      font-weight: bold;
-    }
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 
-    textarea {
-      width: 100%;
-      height: 160px;
-      resize: vertical;
-      background: #0e0e17;
-      border: 1px solid #333348;
-      border-radius: 12px;
-      padding: 15px;
-      color: white;
-      font-size: 16px;
-      outline: none;
-    }
+textarea {
+  width: 100%;
+  min-height: 170px;
+  resize: vertical;
+  background: #0d0c13;
+  color: white;
+  border: 1px solid #302e3c;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 15px;
+  outline: none;
+}
 
-    textarea:focus {
-      border-color: #9b7cff;
-    }
+textarea:focus {
+  border-color: #c05cff;
+}
 
-    button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 16px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(90deg, #ff5fc7, #806cff);
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+button {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg,#ff43bd,#8d63ff);
+  cursor: pointer;
+}
 
-    button:hover {
-      opacity: 0.9;
-    }
+button:active {
+  transform: scale(.98);
+}
 
-    #result {
-      display: none;
-      margin-top: 25px;
-    }
+#results {
+  margin-top: 22px;
+}
 
-    .scene {
-      background: #10101a;
-      border: 1px solid #29293a;
-      border-radius: 14px;
-      padding: 20px;
-      margin-top: 15px;
-    }
+.scene {
+  background: #111019;
+  border: 1px solid #2b2937;
+  border-radius: 15px;
+  padding: 18px;
+  margin-bottom: 15px;
+}
 
-    .scene h3 {
-      color: #ff75ca;
-      margin-bottom: 10px;
-    }
+.scene h2 {
+  margin-top: 0;
+  color: #ff75d1;
+  font-size: 20px;
+}
 
-    .scene p {
-      color: #ccc;
-      line-height: 1.6;
-    }
+.scene p {
+  line-height: 1.6;
+  color: #ddd;
+}
 
-    footer {
-      text-align: center;
-      color: #666;
-      margin-top: 40px;
-      font-size: 13px;
-    }
-  </style>
+.prompt {
+  background: #09090d;
+  border: 1px solid #302e3c;
+  border-radius: 10px;
+  padding: 13px;
+  margin-top: 10px;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  color: #eee;
+}
+
+.copy {
+  background: #292635;
+  margin-top: 8px;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.badge {
+  display: inline-block;
+  background: #272331;
+  color: #ff8bd9;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.footer {
+  text-align: center;
+  color: #555;
+  font-size: 12px;
+  margin-top: 30px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <section class="hero">
-      <div class="logo">🎬</div>
-
-      <h1>AI Movie Recap</h1>
-
-      <p class="subtitle">
-        Turn a movie story into a short AI video workflow.
-      </p>
-    </section>
-
-
-    <div class="card">
-
-      <label for="movieStory">
-        Enter Movie Story
-      </label>
-
-      <textarea
-        id="movieStory"
-        placeholder="Paste your movie story here...">
-      </textarea>
-
-      <button onclick="generateRecap()">
-        ✨ Generate 4-Scene Recap
-      </button>
-
-      <div id="result">
-
-        <div class="scene">
-          <h3>🎬 Scene 1 — Introduction</h3>
-          <p>
-            Establish the main character and the world of the story.
-          </p>
-        </div>
-
-        <div class="scene">
-          <h3>⚡ Scene 2 — Conflict</h3>
-          <p>
-            Show the main problem or unexpected event.
-          </p>
-        </div>
-
-        <div class="scene">
-          <h3>🔥 Scene 3 — Climax</h3>
-          <p>
-            Build the most exciting moment of the story.
-          </p>
-        </div>
-
-        <div class="scene">
-          <h3>❤️ Scene 4 — Ending</h3>
-          <p>
-            Show the emotional ending and conclusion.
-          </p>
-        </div>
-
-      </div>
-
+  <div class="header">
+    <div class="logo">🎬</div>
+    <h1>AI Movie Recap</h1>
+    <div class="subtitle">
+      Turn a movie story into a 4-scene AI video workflow.
     </div>
+  </div>
 
-    <footer>
-      AI Movie Recap • Creative Video Workflow
-    </footer>
+  <div class="card">
+
+    <label>Enter Movie Story</label>
+
+    <textarea id="story"
+      placeholder="Write your movie story here..."></textarea>
+
+    <button onclick="generateScenes()">
+      ✨ Generate 4-Scene Recap
+    </button>
+
+    <div id="results"></div>
 
   </div>
 
+  <div class="footer">
+    AI Movie Recap • Creative Video Workflow
+  </div>
 
-  <script>
+</div>
 
-    function generateRecap() {
 
-      const story =
-        document.getElementById("movieStory").value.trim();
+<script>
 
-      const result =
-        document.getElementById("result");
+function splitStory(text) {
 
-      if (story === "") {
+  let sentences = text
+    .replace(/\n+/g, " ")
+    .split(/[.!?]+/)
+    .map(x => x.trim())
+    .filter(x => x.length > 0);
 
-        alert("Please enter a movie story first.");
+  if (sentences.length === 0) {
+    return [
+      text,
+      text,
+      text,
+      text
+    ];
+  }
 
-        return;
-      }
+  let parts = [];
 
-      result.style.display = "block";
+  let size = Math.ceil(sentences.length / 4);
 
-      result.scrollIntoView({
-        behavior: "smooth"
-      });
+  for (let i = 0; i < 4; i++) {
+
+    let start = i * size;
+
+    let part = sentences
+      .slice(start, start + size)
+      .join(". ");
+
+    if (!part) {
+      part = sentences[sentences.length - 1];
     }
 
-  </script>
+    parts.push(part + ".");
+  }
+
+  return parts;
+}
+
+
+function createImagePrompt(sceneText, sceneNumber) {
+
+  return `
+Cute cinematic 3D cartoon scene, high-quality animated movie style,
+adorable expressive characters, detailed environment, soft cinematic lighting,
+beautiful colors, emotional storytelling, depth of field.
+
+Scene ${sceneNumber}:
+${sceneText}
+
+Vertical 9:16 composition, character clearly visible,
+consistent character design, polished 3D animation,
+no text, no watermark.
+`;
+}
+
+
+function createVideoPrompt(sceneText, sceneNumber) {
+
+  return `
+Create a short cinematic 3D cartoon video.
+
+Scene ${sceneNumber}:
+${sceneText}
+
+The characters move naturally with cute expressive facial animation.
+Use gentle camera movement, subtle body motion and realistic environmental movement.
+Keep the same character appearance throughout the shot.
+
+Camera:
+slow cinematic movement, smooth tracking shot,
+soft depth of field.
+
+Mood:
+cute, emotional, warm and visually satisfying.
+
+Duration:
+5-8 seconds.
+
+Vertical 9:16 video.
+No subtitles.
+No text.
+No watermark.
+`;
+}
+
+
+function createVoice(sceneText, sceneNumber) {
+
+  return `
+Scene ${sceneNumber} narration:
+
+${sceneText}
+`;
+}
+
+
+function copyText(text, button) {
+
+  navigator.clipboard.writeText(text)
+    .then(() => {
+
+      let old = button.innerText;
+
+      button.innerText = "✓ Copied!";
+
+      setTimeout(() => {
+        button.innerText = old;
+      }, 1500);
+
+    })
+    .catch(() => {
+
+      alert("Copy failed. Please copy manually.");
+
+    });
+}
+
+
+function generateScenes() {
+
+  const story =
+    document.getElementById("story").value.trim();
+
+  const results =
+    document.getElementById("results");
+
+  if (!story) {
+
+    alert("Please enter a movie story first.");
+
+    return;
+  }
+
+  const scenes = splitStory(story);
+
+  const titles = [
+    "🎬 Scene 1 — Introduction",
+    "⚡ Scene 2 — Conflict",
+    "🔥 Scene 3 — Climax",
+    "💗 Scene 4 — Ending"
+  ];
+
+  results.innerHTML = "";
+
+  scenes.forEach((sceneText, index) => {
+
+    const number = index + 1;
+
+    const imagePrompt =
+      createImagePrompt(sceneText, number);
+
+    const videoPrompt =
+      createVideoPrompt(sceneText, number);
+
+    const voice =
+      createVoice(sceneText, number);
+
+    const scene = document.createElement("div");
+
+    scene.className = "scene";
+
+    scene.innerHTML = `
+
+      <span class="badge">
+        Scene ${number}
+      </span>
+
+      <h2>${titles[index]}</h2>
+
+      <p>
+        <strong>Story:</strong><br>
+        ${sceneText}
+      </p>
+
+      <h3>🎨 Image Prompt</h3>
+
+      <div class="prompt">
+        ${imagePrompt}
+      </div>
+
+      <button class="copy"
+        onclick='copyText(${JSON.stringify(imagePrompt)}, this)'>
+        📋 Copy Image Prompt
+      </button>
+
+
+      <h3>🎬 Video Prompt</h3>
+
+      <div class="prompt">
+        ${videoPrompt}
+      </div>
+
+      <button class="copy"
+        onclick='copyText(${JSON.stringify(videoPrompt)}, this)'>
+        📋 Copy Video Prompt
+      </button>
+
+
+      <h3>🎙️ Voice-over</h3>
+
+      <div class="prompt">
+        ${voice}
+      </div>
+
+      <button class="copy"
+        onclick='copyText(${JSON.stringify(voice)}, this)'>
+        📋 Copy Voice-over
+      </button>
+
+    `;
+
+    results.appendChild(scene);
+
+  });
+
+  window.scrollTo({
+    top: results.offsetTop - 20,
+    behavior: "smooth"
+  });
+
+}
+
+</script>
 
 </body>
 </html>
